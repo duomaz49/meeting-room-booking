@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.tomato.rising_star_2026.RisingStar2026ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.101 s -- in com.tomato.rising_star_2026.RisingStar2026ApplicationTests
