@@ -59,7 +59,7 @@ class BookingControllerIntegrationTest {
     @Test
     @DisplayName("POST /bookings - should create booking successfully")
     void createBooking_shouldCreateBookingSuccessfully() throws Exception {
-        BookingRequest request = new BookingRequest(testRoom.getId(), futureStart, futureEnd);
+        BookingRequest request = new BookingRequest(testRoom.getId(), "Test User", futureStart, futureEnd);
 
         mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -73,7 +73,7 @@ class BookingControllerIntegrationTest {
     @Test
     @DisplayName("POST /bookings - should return 404 when room not found")
     void createBooking_shouldReturn404WhenRoomNotFound() throws Exception {
-        BookingRequest request = new BookingRequest(999L, futureStart, futureEnd);
+        BookingRequest request = new BookingRequest(999L, "Test User", futureStart, futureEnd);
 
         mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -85,9 +85,9 @@ class BookingControllerIntegrationTest {
     @Test
     @DisplayName("POST /bookings - should return 409 when booking overlaps")
     void createBooking_shouldReturn409WhenBookingOverlaps() throws Exception {
-        bookingRepository.save(new Booking(testRoom, futureStart, futureEnd));
+        bookingRepository.save(new Booking(testRoom, "Existing User", futureStart, futureEnd));
 
-        BookingRequest request = new BookingRequest(testRoom.getId(), futureStart, futureEnd);
+        BookingRequest request = new BookingRequest(testRoom.getId(), "Test User", futureStart, futureEnd);
 
         mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -99,7 +99,7 @@ class BookingControllerIntegrationTest {
     @Test
     @DisplayName("POST /bookings - should return 400 when validation fails")
     void createBooking_shouldReturn400WhenValidationFails() throws Exception {
-        BookingRequest request = new BookingRequest(null, null, null);
+        BookingRequest request = new BookingRequest(null, null, null, null);
 
         mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -111,7 +111,7 @@ class BookingControllerIntegrationTest {
     @Test
     @DisplayName("PATCH /bookings/{id} - should cancel booking successfully")
     void cancelBooking_shouldCancelBookingSuccessfully() throws Exception {
-        Booking booking = bookingRepository.save(new Booking(testRoom, futureStart, futureEnd));
+        Booking booking = bookingRepository.save(new Booking(testRoom, "Test User", futureStart, futureEnd));
 
         mockMvc.perform(patch("/bookings/{id}", booking.getId()))
                 .andExpect(status().isOk())
@@ -129,10 +129,10 @@ class BookingControllerIntegrationTest {
     @Test
     @DisplayName("GET /bookings - should return active bookings")
     void getBookingsByRoom_shouldReturnActiveBookings() throws Exception {
-        bookingRepository.save(new Booking(testRoom, futureStart, futureEnd));
-        bookingRepository.save(new Booking(testRoom, futureStart.plusDays(1), futureEnd.plusDays(1)));
+        bookingRepository.save(new Booking(testRoom, "User 1", futureStart, futureEnd));
+        bookingRepository.save(new Booking(testRoom, "User 2", futureStart.plusDays(1), futureEnd.plusDays(1)));
 
-        Booking canceledBooking = new Booking(testRoom, futureStart.plusDays(2), futureEnd.plusDays(2));
+        Booking canceledBooking = new Booking(testRoom, "User 3", futureStart.plusDays(2), futureEnd.plusDays(2));
         canceledBooking.setStatus(BookingStatus.CANCELED);
         bookingRepository.save(canceledBooking);
 

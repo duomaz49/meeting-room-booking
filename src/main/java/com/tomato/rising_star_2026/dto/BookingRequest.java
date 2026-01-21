@@ -1,6 +1,7 @@
 package com.tomato.rising_star_2026.dto;
 
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,9 @@ public class BookingRequest {
 
     @NotNull(message = "Room ID is required")
     private Long roomId;
+
+    @NotBlank(message = "Booker name is required")
+    private String bookerName;
 
     @NotNull(message = "Start time is required")
     @Future(message = "Start time must be in the future")

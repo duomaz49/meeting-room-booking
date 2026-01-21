@@ -56,8 +56,8 @@ class BookingServiceTest {
     @Test
     @DisplayName("createBooking - should create booking when all validations pass")
     void createBooking_shouldCreateBookingWhenValid() {
-        BookingRequest request = new BookingRequest(1L, futureStart, futureEnd);
-        Booking savedBooking = new Booking(1L, testRoom, futureStart, futureEnd, BookingStatus.BOOKED);
+        BookingRequest request = new BookingRequest(1L, "Test User", futureStart, futureEnd);
+        Booking savedBooking = new Booking(1L, testRoom, "Test User", futureStart, futureEnd, BookingStatus.BOOKED);
 
         when(roomRepository.findById(1L)).thenReturn(Optional.of(testRoom));
         when(bookingRepository.existsOverlappingBooking(1L, futureStart, futureEnd)).thenReturn(false);
@@ -75,7 +75,7 @@ class BookingServiceTest {
     @Test
     @DisplayName("createBooking - should throw RoomNotFoundException when room does not exist")
     void createBooking_shouldThrowWhenRoomNotFound() {
-        BookingRequest request = new BookingRequest(999L, futureStart, futureEnd);
+        BookingRequest request = new BookingRequest(999L, "Test User", futureStart, futureEnd);
         when(roomRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> bookingService.createBooking(request))
@@ -88,7 +88,7 @@ class BookingServiceTest {
     @Test
     @DisplayName("createBooking - should throw BookingOverlapException when booking overlaps")
     void createBooking_shouldThrowWhenBookingOverlaps() {
-        BookingRequest request = new BookingRequest(1L, futureStart, futureEnd);
+        BookingRequest request = new BookingRequest(1L, "Test User", futureStart, futureEnd);
 
         when(roomRepository.findById(1L)).thenReturn(Optional.of(testRoom));
         when(bookingRepository.existsOverlappingBooking(1L, futureStart, futureEnd)).thenReturn(true);
@@ -105,7 +105,7 @@ class BookingServiceTest {
     void createBooking_shouldThrowWhenStartAfterEnd() {
         LocalDateTime start = LocalDateTime.now().plusDays(2);
         LocalDateTime end = LocalDateTime.now().plusDays(1);
-        BookingRequest request = new BookingRequest(1L, start, end);
+        BookingRequest request = new BookingRequest(1L, "Test User", start, end);
 
         assertThatThrownBy(() -> bookingService.createBooking(request))
                 .isInstanceOf(InvalidBookingTimeException.class)
@@ -118,7 +118,7 @@ class BookingServiceTest {
     @DisplayName("createBooking - should throw InvalidBookingTimeException when start equals end")
     void createBooking_shouldThrowWhenStartEqualsEnd() {
         LocalDateTime sameTime = LocalDateTime.now().plusDays(1);
-        BookingRequest request = new BookingRequest(1L, sameTime, sameTime);
+        BookingRequest request = new BookingRequest(1L, "Test User", sameTime, sameTime);
 
         assertThatThrownBy(() -> bookingService.createBooking(request))
                 .isInstanceOf(InvalidBookingTimeException.class)
@@ -132,7 +132,7 @@ class BookingServiceTest {
     void createBooking_shouldThrowWhenBookingInPast() {
         LocalDateTime pastStart = LocalDateTime.now().minusDays(1);
         LocalDateTime pastEnd = LocalDateTime.now().minusHours(1);
-        BookingRequest request = new BookingRequest(1L, pastStart, pastEnd);
+        BookingRequest request = new BookingRequest(1L, "Test User", pastStart, pastEnd);
 
         assertThatThrownBy(() -> bookingService.createBooking(request))
                 .isInstanceOf(InvalidBookingTimeException.class)
@@ -144,8 +144,8 @@ class BookingServiceTest {
     @Test
     @DisplayName("cancelBooking - should cancel booking successfully")
     void cancelBooking_shouldCancelBookingSuccessfully() {
-        Booking existingBooking = new Booking(1L, testRoom, futureStart, futureEnd, BookingStatus.BOOKED);
-        Booking canceledBooking = new Booking(1L, testRoom, futureStart, futureEnd, BookingStatus.CANCELED);
+        Booking existingBooking = new Booking(1L, testRoom, "Test User", futureStart, futureEnd, BookingStatus.BOOKED);
+        Booking canceledBooking = new Booking(1L, testRoom, "Test User", futureStart, futureEnd, BookingStatus.CANCELED);
 
         when(bookingRepository.findById(1L)).thenReturn(Optional.of(existingBooking));
         when(bookingRepository.save(any(Booking.class))).thenReturn(canceledBooking);
@@ -172,8 +172,8 @@ class BookingServiceTest {
     @Test
     @DisplayName("getBookingsByRoom - should return active bookings for room")
     void getBookingsByRoom_shouldReturnActiveBookings() {
-        Booking booking1 = new Booking(1L, testRoom, futureStart, futureEnd, BookingStatus.BOOKED);
-        Booking booking2 = new Booking(2L, testRoom, futureStart.plusDays(1), futureEnd.plusDays(1), BookingStatus.BOOKED);
+        Booking booking1 = new Booking(1L, testRoom, "Test User", futureStart, futureEnd, BookingStatus.BOOKED);
+        Booking booking2 = new Booking(2L, testRoom, "Test User 2", futureStart.plusDays(1), futureEnd.plusDays(1), BookingStatus.BOOKED);
 
         when(roomRepository.existsById(1L)).thenReturn(true);
         when(bookingRepository.findByRoomIdAndStatus(1L, BookingStatus.BOOKED))

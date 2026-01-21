@@ -33,6 +33,8 @@ public class Booking {
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
+    private String bookerName;
+
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
@@ -40,8 +42,9 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus status = BookingStatus.BOOKED;
 
-    public Booking(Room room, LocalDateTime startTime, LocalDateTime endTime) {
+    public Booking(Room room, String bookerName, LocalDateTime startTime, LocalDateTime endTime) {
         this.room = room;
+        this.bookerName = bookerName;
         this.startTime = startTime;
         this.endTime = endTime;
     }

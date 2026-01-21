@@ -47,7 +47,7 @@ public class BookingService {
             throw new BookingOverlapException();
         }
 
-        Booking booking = new Booking(room, request.getStartTime(), request.getEndTime());
+        Booking booking = new Booking(room, request.getBookerName(), request.getStartTime(), request.getEndTime());
         Booking savedBooking = bookingRepository.save(booking);
 
         log.info("Booking created with id {}", savedBooking.getId());

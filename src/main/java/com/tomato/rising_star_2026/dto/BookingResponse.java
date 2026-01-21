@@ -18,6 +18,7 @@ public class BookingResponse {
     private Long id;
     private Long roomId;
     private String roomName;
+    private String bookerName;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private BookingStatus status;
@@ -27,6 +28,7 @@ public class BookingResponse {
                 booking.getId(),
                 booking.getRoom().getId(),
                 booking.getRoom().getName(),
+                booking.getBookerName(),
                 booking.getStartTime(),
                 booking.getEndTime(),
                 booking.getStatus()
