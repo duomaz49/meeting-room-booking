@@ -116,6 +116,10 @@ Access the database console at `http://localhost:8080/h2-console`
 - Username: `sa`
 - Password: *(empty)*
 
+## Postman Collection
+
+A ready-to-use Postman collection is available at `postman/Rising_Star_2026_API.postman_collection.json`. Import it into Postman to test all endpoints.
+
 ## Running Tests
 
 ```bash
