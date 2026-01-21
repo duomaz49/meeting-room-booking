@@ -39,7 +39,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Matti Meikäläinen\",\n    \"startTime\": \"2026-01-21T10:00:00\",\n    \"endTime\": \"2026-01-21T11:00:00\"\n}"
+							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Matti Meikäläinen\",\n    \"startTime\": \"2027-01-21T10:00:00\",\n    \"endTime\": \"2027-01-21T11:00:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
@@ -62,7 +62,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 2,\n    \"bookerName\": \"Maija Mehiläinen\",\n    \"startTime\": \"2026-01-21T14:00:00\",\n    \"endTime\": \"2026-01-21T15:30:00\"\n}"
+							"raw": "{\n    \"roomId\": 2,\n    \"bookerName\": \"Maija Mehiläinen\",\n    \"startTime\": \"2027-01-21T14:00:00\",\n    \"endTime\": \"2027-01-21T15:30:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
@@ -211,7 +211,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Test User\",\n    \"startTime\": \"2026-01-21T12:00:00\",\n    \"endTime\": \"2026-01-21T10:00:00\"\n}"
+							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Test User\",\n    \"startTime\": \"2027-01-21T12:00:00\",\n    \"endTime\": \"2027-01-21T10:00:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
@@ -240,7 +240,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 999,\n    \"bookerName\": \"Test User\",\n    \"startTime\": \"2026-01-21T10:00:00\",\n    \"endTime\": \"2026-01-21T11:00:00\"\n}"
+							"raw": "{\n    \"roomId\": 999,\n    \"bookerName\": \"Test User\",\n    \"startTime\": \"2027-01-21T10:00:00\",\n    \"endTime\": \"2027-01-21T11:00:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
@@ -303,7 +303,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Another User\",\n    \"startTime\": \"2026-01-21T10:30:00\",\n    \"endTime\": \"2026-01-21T11:30:00\"\n}"
+							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Another User\",\n    \"startTime\": \"2027-01-21T10:30:00\",\n    \"endTime\": \"2027-01-21T11:30:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
