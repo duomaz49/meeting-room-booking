@@ -25,7 +25,7 @@
 	"item": [
 		{
 			"name": "Bookings",
-			"description": "CRUD operations for booking resources.\n\nEndpoints:\n- POST /api/bookings - Create booking\n- GET /api/bookings?roomId={id} - List bookings by room\n- DELETE /api/bookings/{id} - Cancel booking",
+			"description": "CRUD operations for booking resources.\n\nEndpoints:\n- POST /bookings - Create booking\n- GET /bookings?roomId={id} - List bookings by room\n- PATCH /bookings/{id} - Cancel booking",
 			"item": [
 				{
 					"name": "Create Booking - Room 1",
@@ -42,9 +42,9 @@
 							"raw": "{\n    \"roomId\": 1,\n    \"startTime\": \"2026-01-21T10:00:00\",\n    \"endTime\": \"2026-01-21T11:00:00\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings",
+							"raw": "{{baseUrl}}/bookings",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"]
+							"path": ["bookings"]
 						},
 						"description": "Creates a new booking for Room 1 (Neuvotteluhuone A).\n\nRequest body:\n- roomId: ID of the room to book\n- startTime: Start time in ISO 8601 format (must be in future)\n- endTime: End time in ISO 8601 format (must be in future)\n\nResponse: 201 Created with booking details"
 					},
@@ -65,9 +65,9 @@
 							"raw": "{\n    \"roomId\": 2,\n    \"startTime\": \"2026-01-21T14:00:00\",\n    \"endTime\": \"2026-01-21T15:30:00\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings",
+							"raw": "{{baseUrl}}/bookings",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"]
+							"path": ["bookings"]
 						},
 						"description": "Creates a new booking for Room 2 (Neuvotteluhuone B).\n\nResponse: 201 Created with booking details"
 					},
@@ -79,9 +79,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings?roomId={{roomId}}",
+							"raw": "{{baseUrl}}/bookings?roomId={{roomId}}",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"],
+							"path": ["bookings"],
 							"query": [
 								{
 									"key": "roomId",
@@ -99,9 +99,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings?roomId=1",
+							"raw": "{{baseUrl}}/bookings?roomId=1",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"],
+							"path": ["bookings"],
 							"query": [
 								{
 									"key": "roomId",
@@ -119,9 +119,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings?roomId=2",
+							"raw": "{{baseUrl}}/bookings?roomId=2",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"],
+							"path": ["bookings"],
 							"query": [
 								{
 									"key": "roomId",
@@ -136,12 +136,12 @@
 				{
 					"name": "Cancel Booking",
 					"request": {
-						"method": "DELETE",
+						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+							"raw": "{{baseUrl}}/bookings/{{bookingId}}",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings", "{{bookingId}}"]
+							"path": ["bookings", "{{bookingId}}"]
 						},
 						"description": "Cancels an existing booking by its ID.\n\nThe booking status will be changed to CANCELED (soft delete).\n\nResponse: 200 OK with updated booking details"
 					},
@@ -168,9 +168,9 @@
 							"raw": "{\n    \"roomId\": 1,\n    \"startTime\": \"2020-01-01T10:00:00\",\n    \"endTime\": \"2020-01-01T11:00:00\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings",
+							"raw": "{{baseUrl}}/bookings",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"]
+							"path": ["bookings"]
 						},
 						"description": "Tests 400 Bad Request when booking with past dates.\n\nExpected: 400 Bad Request"
 					},
@@ -191,9 +191,9 @@
 							"raw": "{\n    \"roomId\": 1\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings",
+							"raw": "{{baseUrl}}/bookings",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"]
+							"path": ["bookings"]
 						},
 						"description": "Tests 400 Bad Request when required fields are missing.\n\nExpected: 400 Bad Request with validation error details"
 					},
@@ -214,9 +214,9 @@
 							"raw": "{\n    \"roomId\": 1,\n    \"startTime\": \"2026-01-21T12:00:00\",\n    \"endTime\": \"2026-01-21T10:00:00\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings",
+							"raw": "{{baseUrl}}/bookings",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"]
+							"path": ["bookings"]
 						},
 						"description": "Tests 400 Bad Request when start time is after end time.\n\nExpected: 400 Bad Request"
 					},
@@ -243,9 +243,9 @@
 							"raw": "{\n    \"roomId\": 999,\n    \"startTime\": \"2026-01-21T10:00:00\",\n    \"endTime\": \"2026-01-21T11:00:00\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings",
+							"raw": "{{baseUrl}}/bookings",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"]
+							"path": ["bookings"]
 						},
 						"description": "Tests 404 Not Found when booking a non-existent room.\n\nExpected: 404 Not Found"
 					},
@@ -254,12 +254,12 @@
 				{
 					"name": "Cancel Booking - Not Found",
 					"request": {
-						"method": "DELETE",
+						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings/999",
+							"raw": "{{baseUrl}}/bookings/999",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings", "999"]
+							"path": ["bookings", "999"]
 						},
 						"description": "Tests 404 Not Found when canceling a non-existent booking.\n\nExpected: 404 Not Found"
 					},
@@ -271,9 +271,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings?roomId=999",
+							"raw": "{{baseUrl}}/bookings?roomId=999",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"],
+							"path": ["bookings"],
 							"query": [
 								{
 									"key": "roomId",
@@ -306,9 +306,9 @@
 							"raw": "{\n    \"roomId\": 1,\n    \"startTime\": \"2026-01-21T10:30:00\",\n    \"endTime\": \"2026-01-21T11:30:00\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/bookings",
+							"raw": "{{baseUrl}}/bookings",
 							"host": ["{{baseUrl}}"],
-							"path": ["api", "bookings"]
+							"path": ["bookings"]
 						},
 						"description": "Tests 409 Conflict when creating a booking that overlaps with an existing one.\n\nNote: First create a booking for Room 1 from 10:00-11:00, then run this request.\n\nExpected: 409 Conflict"
 					},

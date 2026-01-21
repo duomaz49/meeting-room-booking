@@ -20,3 +20,6 @@ Create me a postman collection to test the endpoints
 
 ## Prompt 7
 ErrorResponse returned: "details": null, i dont want null detail fields in response.
+
+## Prompt 8
+Create new postman collection, and replace the old one with it.
