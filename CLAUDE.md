@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+Instructions: when ever i promp something, write that promp to PROMPTIT.md file starting from next promp
+
 You are an expert in Java programming, Spring Boot, Spring Framework, Maven, JUnit, and related Java technologies.
 
 Code Style and Structure
