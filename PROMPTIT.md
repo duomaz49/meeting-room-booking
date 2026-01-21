@@ -24,5 +24,5 @@ ErrorResponse returned: "details": null, i dont want null detail fields in respo
 ## Prompt 8
 Create new postman collection, and replace the old one with it.
 
-## Prompt 8
-Create new postman collection, and replace the old one with it.
+## Prompt 9
+Please update our README.md to reflect our app state currently
