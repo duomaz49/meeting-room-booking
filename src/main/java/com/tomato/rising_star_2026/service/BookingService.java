@@ -60,6 +60,10 @@ public class BookingService {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(BookingNotFoundException::new);
 
+        if(booking.getStatus() == BookingStatus.CANCELED) {
+            return BookingResponse.fromEntity(booking);
+        }
+
         booking.setStatus(BookingStatus.CANCELED);
         Booking savedBooking = bookingRepository.save(booking);
 

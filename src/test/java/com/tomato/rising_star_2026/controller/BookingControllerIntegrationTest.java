@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,11 +57,11 @@ class BookingControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /api/bookings - should create booking successfully")
+    @DisplayName("POST /bookings - should create booking successfully")
     void createBooking_shouldCreateBookingSuccessfully() throws Exception {
         BookingRequest request = new BookingRequest(testRoom.getId(), futureStart, futureEnd);
 
-        mockMvc.perform(post("/api/bookings")
+        mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
@@ -71,11 +71,11 @@ class BookingControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /api/bookings - should return 404 when room not found")
+    @DisplayName("POST /bookings - should return 404 when room not found")
     void createBooking_shouldReturn404WhenRoomNotFound() throws Exception {
         BookingRequest request = new BookingRequest(999L, futureStart, futureEnd);
 
-        mockMvc.perform(post("/api/bookings")
+        mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound())
@@ -83,13 +83,13 @@ class BookingControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /api/bookings - should return 409 when booking overlaps")
+    @DisplayName("POST /bookings - should return 409 when booking overlaps")
     void createBooking_shouldReturn409WhenBookingOverlaps() throws Exception {
         bookingRepository.save(new Booking(testRoom, futureStart, futureEnd));
 
         BookingRequest request = new BookingRequest(testRoom.getId(), futureStart, futureEnd);
 
-        mockMvc.perform(post("/api/bookings")
+        mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isConflict())
@@ -97,11 +97,11 @@ class BookingControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /api/bookings - should return 400 when validation fails")
+    @DisplayName("POST /bookings - should return 400 when validation fails")
     void createBooking_shouldReturn400WhenValidationFails() throws Exception {
         BookingRequest request = new BookingRequest(null, null, null);
 
-        mockMvc.perform(post("/api/bookings")
+        mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
@@ -109,25 +109,25 @@ class BookingControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("DELETE /api/bookings/{id} - should cancel booking successfully")
+    @DisplayName("PATCH /bookings/{id} - should cancel booking successfully")
     void cancelBooking_shouldCancelBookingSuccessfully() throws Exception {
         Booking booking = bookingRepository.save(new Booking(testRoom, futureStart, futureEnd));
 
-        mockMvc.perform(delete("/api/bookings/{id}", booking.getId()))
+        mockMvc.perform(patch("/bookings/{id}", booking.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status", is("CANCELED")));
     }
 
     @Test
-    @DisplayName("DELETE /api/bookings/{id} - should return 404 when booking not found")
+    @DisplayName("PATCH /bookings/{id} - should return 404 when booking not found")
     void cancelBooking_shouldReturn404WhenBookingNotFound() throws Exception {
-        mockMvc.perform(delete("/api/bookings/{id}", 999L))
+        mockMvc.perform(patch("/bookings/{id}", 999L))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message", is("Booking not found")));
     }
 
     @Test
-    @DisplayName("GET /api/bookings - should return active bookings")
+    @DisplayName("GET /bookings - should return active bookings")
     void getBookingsByRoom_shouldReturnActiveBookings() throws Exception {
         bookingRepository.save(new Booking(testRoom, futureStart, futureEnd));
         bookingRepository.save(new Booking(testRoom, futureStart.plusDays(1), futureEnd.plusDays(1)));
@@ -136,7 +136,7 @@ class BookingControllerIntegrationTest {
         canceledBooking.setStatus(BookingStatus.CANCELED);
         bookingRepository.save(canceledBooking);
 
-        mockMvc.perform(get("/api/bookings").param("roomId", testRoom.getId().toString()))
+        mockMvc.perform(get("/bookings").param("roomId", testRoom.getId().toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].status", is("BOOKED")))
@@ -144,17 +144,17 @@ class BookingControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("GET /api/bookings - should return empty list when no bookings")
+    @DisplayName("GET /bookings - should return empty list when no bookings")
     void getBookingsByRoom_shouldReturnEmptyList() throws Exception {
-        mockMvc.perform(get("/api/bookings").param("roomId", testRoom.getId().toString()))
+        mockMvc.perform(get("/bookings").param("roomId", testRoom.getId().toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Test
-    @DisplayName("GET /api/bookings - should return 404 when room not found")
+    @DisplayName("GET /bookings - should return 404 when room not found")
     void getBookingsByRoom_shouldReturn404WhenRoomNotFound() throws Exception {
-        mockMvc.perform(get("/api/bookings").param("roomId", "999999"))
+        mockMvc.perform(get("/bookings").param("roomId", "999999"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message", is("Room not found")));
     }
