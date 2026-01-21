@@ -20,11 +20,12 @@ The application starts at `http://localhost:8080`
 
 ### Create Booking
 ```bash
-POST /api/bookings
+POST /bookings
 Content-Type: application/json
 
 {
   "roomId": 1,
+  "bookerName": "Matti Meikäläinen",
   "startTime": "2026-01-25T10:00:00",
   "endTime": "2026-01-25T11:00:00"
 }
@@ -36,6 +37,7 @@ Content-Type: application/json
   "id": 1,
   "roomId": 1,
   "roomName": "Conference Room A",
+  "bookerName": "Matti Meikäläinen",
   "startTime": "2026-01-25T10:00:00",
   "endTime": "2026-01-25T11:00:00",
   "status": "BOOKED"
@@ -44,7 +46,7 @@ Content-Type: application/json
 
 ### Cancel Booking
 ```bash
-DELETE /api/bookings/{id}
+PATCH /bookings/{id}
 ```
 
 **Response:** `200 OK`
@@ -53,6 +55,7 @@ DELETE /api/bookings/{id}
   "id": 1,
   "roomId": 1,
   "roomName": "Conference Room A",
+  "bookerName": "Matti Meikäläinen",
   "startTime": "2026-01-25T10:00:00",
   "endTime": "2026-01-25T11:00:00",
   "status": "CANCELED"
@@ -61,7 +64,7 @@ DELETE /api/bookings/{id}
 
 ### List Bookings by Room
 ```bash
-GET /api/rooms/{roomId}/bookings
+GET /bookings?roomId={roomId}
 ```
 
 **Response:** `200 OK`
@@ -71,6 +74,7 @@ GET /api/rooms/{roomId}/bookings
     "id": 1,
     "roomId": 1,
     "roomName": "Conference Room A",
+    "bookerName": "Matti Meikäläinen",
     "startTime": "2026-01-25T10:00:00",
     "endTime": "2026-01-25T11:00:00",
     "status": "BOOKED"
