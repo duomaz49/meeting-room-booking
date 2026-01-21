@@ -39,14 +39,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 1,\n    \"startTime\": \"2026-01-21T10:00:00\",\n    \"endTime\": \"2026-01-21T11:00:00\"\n}"
+							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Matti Meikäläinen\",\n    \"startTime\": \"2026-01-21T10:00:00\",\n    \"endTime\": \"2026-01-21T11:00:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
 							"host": ["{{baseUrl}}"],
 							"path": ["bookings"]
 						},
-						"description": "Creates a new booking for Room 1 (Neuvotteluhuone A).\n\nRequest body:\n- roomId: ID of the room to book\n- startTime: Start time in ISO 8601 format (must be in future)\n- endTime: End time in ISO 8601 format (must be in future)\n\nResponse: 201 Created with booking details"
+						"description": "Creates a new booking for Room 1 (Neuvotteluhuone A).\n\nRequest body:\n- roomId: ID of the room to book\n- bookerName: Name of the person making the booking\n- startTime: Start time in ISO 8601 format (must be in future)\n- endTime: End time in ISO 8601 format (must be in future)\n\nResponse: 201 Created with booking details"
 					},
 					"response": []
 				},
@@ -62,7 +62,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 2,\n    \"startTime\": \"2026-01-21T14:00:00\",\n    \"endTime\": \"2026-01-21T15:30:00\"\n}"
+							"raw": "{\n    \"roomId\": 2,\n    \"bookerName\": \"Maija Mehiläinen\",\n    \"startTime\": \"2026-01-21T14:00:00\",\n    \"endTime\": \"2026-01-21T15:30:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
@@ -165,7 +165,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 1,\n    \"startTime\": \"2020-01-01T10:00:00\",\n    \"endTime\": \"2020-01-01T11:00:00\"\n}"
+							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Test User\",\n    \"startTime\": \"2020-01-01T10:00:00\",\n    \"endTime\": \"2020-01-01T11:00:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
@@ -211,7 +211,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 1,\n    \"startTime\": \"2026-01-21T12:00:00\",\n    \"endTime\": \"2026-01-21T10:00:00\"\n}"
+							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Test User\",\n    \"startTime\": \"2026-01-21T12:00:00\",\n    \"endTime\": \"2026-01-21T10:00:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
@@ -240,7 +240,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 999,\n    \"startTime\": \"2026-01-21T10:00:00\",\n    \"endTime\": \"2026-01-21T11:00:00\"\n}"
+							"raw": "{\n    \"roomId\": 999,\n    \"bookerName\": \"Test User\",\n    \"startTime\": \"2026-01-21T10:00:00\",\n    \"endTime\": \"2026-01-21T11:00:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
@@ -303,7 +303,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"roomId\": 1,\n    \"startTime\": \"2026-01-21T10:30:00\",\n    \"endTime\": \"2026-01-21T11:30:00\"\n}"
+							"raw": "{\n    \"roomId\": 1,\n    \"bookerName\": \"Another User\",\n    \"startTime\": \"2026-01-21T10:30:00\",\n    \"endTime\": \"2026-01-21T11:30:00\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/bookings",
