@@ -127,7 +127,7 @@ class BookingControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("GET /api/rooms/{id}/bookings - should return active bookings")
+    @DisplayName("GET /api/bookings - should return active bookings")
     void getBookingsByRoom_shouldReturnActiveBookings() throws Exception {
         bookingRepository.save(new Booking(testRoom, futureStart, futureEnd));
         bookingRepository.save(new Booking(testRoom, futureStart.plusDays(1), futureEnd.plusDays(1)));
@@ -136,7 +136,7 @@ class BookingControllerIntegrationTest {
         canceledBooking.setStatus(BookingStatus.CANCELED);
         bookingRepository.save(canceledBooking);
 
-        mockMvc.perform(get("/api/rooms/{id}/bookings", testRoom.getId()))
+        mockMvc.perform(get("/api/bookings").param("roomId", testRoom.getId().toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].status", is("BOOKED")))
@@ -144,17 +144,17 @@ class BookingControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("GET /api/rooms/{id}/bookings - should return empty list when no bookings")
+    @DisplayName("GET /api/bookings - should return empty list when no bookings")
     void getBookingsByRoom_shouldReturnEmptyList() throws Exception {
-        mockMvc.perform(get("/api/rooms/{id}/bookings", testRoom.getId()))
+        mockMvc.perform(get("/api/bookings").param("roomId", testRoom.getId().toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Test
-    @DisplayName("GET /api/rooms/{id}/bookings - should return 404 when room not found")
+    @DisplayName("GET /api/bookings - should return 404 when room not found")
     void getBookingsByRoom_shouldReturn404WhenRoomNotFound() throws Exception {
-        mockMvc.perform(get("/api/rooms/{id}/bookings", 999L))
+        mockMvc.perform(get("/api/bookings").param("roomId", "999999"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message", is("Room not found")));
     }
